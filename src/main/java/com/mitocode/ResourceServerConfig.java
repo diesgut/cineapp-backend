@@ -12,10 +12,10 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-	
-	@Autowired
+
+    @Autowired
     private ResourceServerTokenServices tokenServices;
-	
+
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
 
@@ -23,24 +23,25 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(resourceIds).tokenServices(tokenServices);
     }
-    
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
-                http
+        http
                 .exceptionHandling().authenticationEntryPoint(new AuthException())
                 .and()
                 .requestMatchers()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v2/api-docs/**" ).authenticated()
-                .antMatchers("/clientes/**" ).authenticated()                
-                .antMatchers("/comidas/**" ).authenticated()
-                .antMatchers("/config/**" ).authenticated()
-                .antMatchers("/generos/**" ).authenticated()
-                .antMatchers("/peliculas/**" ).authenticated()
-                .antMatchers("/menus/**" ).authenticated()
-                .antMatchers("/ventas/**" ).authenticated();
-                
-    }    
+                .antMatchers("/v2/api-docs/**").authenticated()
+                .antMatchers("/clientes/**").authenticated()
+                .antMatchers("/comidas/**").authenticated()
+                .antMatchers("/config/**").authenticated()
+                .antMatchers("/generos/**").authenticated()
+                .antMatchers("/peliculas/**").authenticated()
+                .antMatchers("/menus/**").authenticated()
+                .antMatchers("/ventas/**").authenticated()
+                .antMatchers("/roles/**").authenticated();
+
+    }
 
 }
