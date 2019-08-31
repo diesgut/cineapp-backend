@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mitocode.model.Menu;
-import com.mitocode.model.Rol;
 import com.mitocode.service.IMenuService;
 import java.net.URI;
 import javax.validation.Valid;
@@ -52,7 +51,7 @@ public class MenuController {
     @GetMapping("/{id}")
     public ResponseEntity<Menu> leer(@PathVariable("id") Integer idMenu) {
         Menu obj = service.leer(idMenu);
-        if (obj.getIdMenu()== null) {
+        if (obj.getIdMenu() == null) {
             throw new ModeloNotFoundException("ID NO ENCONTRADO: " + idMenu);
         }
         return new ResponseEntity<Menu>(obj, HttpStatus.OK);
@@ -92,6 +91,12 @@ public class MenuController {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable("id") Integer idMenu) {
         service.eliminar(idMenu);
+    }
+
+    @PutMapping(value = "/asignarroles", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Menu> asignarRoles(@RequestBody Menu menuForm) {
+        Menu menu = service.asignarMenuRol(menuForm);
+        return new ResponseEntity<Menu>(menu, HttpStatus.OK);
     }
 
 }

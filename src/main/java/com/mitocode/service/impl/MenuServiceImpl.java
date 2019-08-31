@@ -60,4 +60,12 @@ public class MenuServiceImpl implements IMenuService {
         return menus;
     }
 
+    @Override
+    public Menu asignarMenuRol(Menu menuForm) {
+        Optional<Menu> oMenu = repo.findById(menuForm.getIdMenu());
+        Menu menu = oMenu.get();
+        menu.setRoles(menuForm.getRoles());
+        return repo.save(menu);
+    }
+
 }
